@@ -1,0 +1,74 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: lukStopWatch выгружен
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #lukStopWatch
+    PROPERTIES
+      Name                #lukStopWatch
+      Origin              #{075EB5F9-862B-412F-AA85-091A74766C27}
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #classDeclaration
+        #// lukDEVAX_010272_aruz_desadv, aruz, 27.03.2020
+        #class lukStopWatch
+        #{
+        #    boolean     isRunning;
+        #    utcDateTime startDateTime;
+        #    int64       elapsed;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #elapsed
+        #public str elapsed()
+        #{
+        #    return int642str(elapsed);
+        #}
+      ENDSOURCE
+      SOURCE #start
+        #public void start()
+        #{
+        #    if (!isRunning)
+        #    {
+        #
+        #        startDateTime = this.utcNow();
+        #        isRunning = true;
+        #    }
+        #
+        #}
+      ENDSOURCE
+      SOURCE #stop
+        #public void stop()
+        #{
+        #    utcDateTime endDateTime;
+        #    int64       elapsedThisPeriod;
+        #
+        #    if (isRunning)
+        #    {
+        #        endDateTime = this.utcNow();
+        #        elapsedThisPeriod = DateTimeUtil::getDifference(endDateTime,startDateTime);
+        #        elapsed += elapsedThisPeriod;
+        #        if (elapsed < 0)
+        #        {
+        #            elapsed = 0;
+        #        }
+        #
+        #        isRunning = false;
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #utcNow
+        #private utcDateTime utcNow()
+        #{
+        #    return DateTimeUtil::utcNow();
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: END
